@@ -48,6 +48,22 @@ RSpec.describe SequenceParser do
       expect(results.values.flatten).not_to include('18th')
       expect(results.values.flatten).not_to include("Isn't")
     end
+
+    it 'returns sequences with given length' do
+      sequence_length = 3
+      results = SequenceParser.new(test_dict_path, sequence_length).parse
+      expected_sequences = {
+        'car' => ['carrots'],
+        'giv' => ['give'],
+        'ive' => ['give'],
+        'ots' => ['carrots'],
+        'ows' => ['arrows'],
+        'rot' => ['carrots'],
+        'row' => ['arrows']
+      }
+
+      expect(results).to eq(expected_sequences)
+    end
   end
 
   describe '#write_output' do

@@ -43,4 +43,5 @@ rspec spec/sequence_parser_spec.rb
 - Downloads dictionary automatically if no file is provided
 - Case-insensitive sequence matching
 - Ignores words with numbers and special characters
+- Configurable sequence length (default: 4)
 - Memory-efficient file processing

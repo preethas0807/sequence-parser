@@ -6,8 +6,9 @@ class SequenceParser
   SEQUENCE_LENGTH = 4
   GIST_URL = 'https://gist.githubusercontent.com/seanbiganski/8c657690b75a830e28557480690bb437/raw/061441e9a3253d6e890be410d0352eeeea40010a/dictionary%2520words'
 
-  def initialize(dictionary_path = nil)
+  def initialize(dictionary_path = nil, sequence_length = SEQUENCE_LENGTH)
     @dictionary_path = dictionary_path || download_dictionary
+    @sequence_length = sequence_length
     @sequences = Hash.new { |h, k| h[k] = [] }
   end
 
@@ -48,9 +49,9 @@ class SequenceParser
     # Convert to lowercase for case-insensitive comparison
     word_downcase = word.downcase
 
-    # Extract all possible sequences of SEQUENCE_LENGTH
-    (0..word_downcase.length - SEQUENCE_LENGTH).each do |i|
-      sequence = word_downcase[i, SEQUENCE_LENGTH]
+    # Extract all possible sequences of @sequence_length
+    (0..word_downcase.length - @sequence_length).each do |i|
+      sequence = word_downcase[i, @sequence_length]
       @sequences[sequence] << word unless @sequences[sequence].include?(word)
     end
   end
