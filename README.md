@@ -1,12 +1,12 @@
 # README.md
 
-# Dictionary Sequence Parser
+# Sequence Parser
 
 This Ruby program parses a dictionary file and finds unique sequences of letters that appear in exactly one word.
 
 ## Requirements
 
-- Ruby 2.7+
+- Ruby (Latest stable)
 - RSpec (for running tests)
 
 ## Installation
@@ -44,4 +44,3 @@ rspec spec/sequence_parser_spec.rb
 - Case-insensitive sequence matching
 - Ignores words with numbers and special characters
 - Configurable sequence length (default: 4)
-- Memory-efficient file processing

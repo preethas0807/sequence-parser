@@ -8,7 +8,6 @@ RSpec.describe SequenceParser do
   let(:parser) { SequenceParser.new(test_dict_path) }
 
   before do
-    # Create test dictionary file
     File.write(test_dict_path, <<~DICT)
       arrows
       18th
@@ -63,6 +62,50 @@ RSpec.describe SequenceParser do
       }
 
       expect(results).to eq(expected_sequences)
+    end
+
+    it 'returns an empty hash for an empty dictionary' do
+      empty_dict_path = 'spec/fixtures/empty_dictionary.txt'
+      File.write(empty_dict_path, '')
+
+      results = SequenceParser.new(empty_dict_path).parse
+
+      expected_sequences = {}
+
+      expect(results).to eq(expected_sequences)
+
+      File.delete(empty_dict_path) if File.exist?(empty_dict_path)
+    end
+
+    it 'returns an empty hash when dictionary has words shorter than sequence length' do
+      short_dict_path = 'spec/fixtures/short_words.txt'
+      File.write(short_dict_path, "me\nI\n")
+
+      sequence_length = 3
+      results = SequenceParser.new(short_dict_path, sequence_length).parse
+
+      expected_sequences = {}
+
+      expect(results).to eq(expected_sequences)
+
+      File.delete(short_dict_path) if File.exist?(short_dict_path)
+    end
+
+    it 'handles a dictionary with only one word' do
+      single_word_dict_path = 'spec/fixtures/single_word.txt'
+      File.write(single_word_dict_path, "carrots")
+
+      results = SequenceParser.new(single_word_dict_path).parse
+      expected_sequences = {
+        'carr' => ['carrots'],
+        'arro' => ['carrots'],
+        'rots' => ['carrots'],
+        'rrot' => ['carrots']
+      }
+
+      expect(results).to eq(expected_sequences)
+
+      File.delete(single_word_dict_path) if File.exist?(single_word_dict_path)  # Clean up
     end
   end
 
